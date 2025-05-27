@@ -1,0 +1,53 @@
+server:
+  servlet:
+    context-path: /api/v1
+  ssl:
+    enabled: false
+    key-store: classpath:keystore.p12
+    key-store-password: sadok@123
+    key-alias: myalias
+    key-store-type: PKCS12
+  port: 8095
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/zayenDB
+    username: root
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sadokdorbez0@gmail.com
+    password: wkfa dwgr knnh ecqv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 31536000000 # 1 an en millisecondes
+  image:
+    remoteUrl: https://localhost:8095/api/v1/images/
+    localUrl: https://localhost:8095/api/v1/images/
+    path:
+      local: file:C:/images/
+      remote: file:C:/images/
+
+logging:
+  level:
+    org.springframework.security: DEBUG
