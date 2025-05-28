@@ -26,7 +26,7 @@ public class Item {
     private Long id;
     private String ref;
     private String title;
-    private double Price;
+    private double price;
     private String description;
     private String ownerName;
 
