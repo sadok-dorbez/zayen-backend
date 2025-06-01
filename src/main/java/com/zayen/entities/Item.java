@@ -29,6 +29,7 @@ public class Item {
     private double price;
     private String description;
     private String ownerName;
+    private String city;
 
 
 
