@@ -53,4 +53,14 @@ public class ItemSpecifications {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("status"), status);
     }
+
+    public static Specification<Item> itemSizeIsLike(String size) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("size"), Size.valueOf(size.toUpperCase()));
+    }
+
+    public static Specification<Item> itemColorIsLike(String color) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("color"), Color.valueOf(color.toUpperCase()));
+    }
 }

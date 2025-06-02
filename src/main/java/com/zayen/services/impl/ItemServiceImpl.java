@@ -187,28 +187,44 @@ public class ItemServiceImpl implements ItemService {
             predicates.add(ItemSpecifications.statusIs(ItemStatus.PUBLISHED).toPredicate(root, query, criteriaBuilder));
 
             if (filterCriteria.getItemCategory() != null) {
-                predicates.add(ItemSpecifications.itemCategoryIs(filterCriteria.getItemCategory()).toPredicate(root, query, criteriaBuilder));
+                predicates.add(ItemSpecifications.itemCategoryIs(filterCriteria.getItemCategory())
+                        .toPredicate(root, query, criteriaBuilder));
             }
 
             if (filterCriteria.getItemSize() != null) {
-                predicates.add(ItemSpecifications.itemSizeIs(filterCriteria.getItemSize()).toPredicate(root, query, criteriaBuilder));
+                predicates.add(ItemSpecifications.itemSizeIs(filterCriteria.getItemSize())
+                        .toPredicate(root, query, criteriaBuilder));
             }
 
             if (filterCriteria.getItemColor() != null) {
-                predicates.add(ItemSpecifications.itemColorIs(filterCriteria.getItemColor()).toPredicate(root, query, criteriaBuilder));
+                predicates.add(ItemSpecifications.itemColorIs(filterCriteria.getItemColor())
+                        .toPredicate(root, query, criteriaBuilder));
             }
 
             if (filterCriteria.getPrice() > 0) {
-                predicates.add(ItemSpecifications.priceEqual(filterCriteria.getPrice()).toPredicate(root, query, criteriaBuilder));
+                predicates.add(ItemSpecifications.priceEqual(filterCriteria.getPrice())
+                        .toPredicate(root, query, criteriaBuilder));
+            } else {
+                if (filterCriteria.getMinPrice() > 0) {
+                    predicates.add(ItemSpecifications.priceGreaterThanOrEqual(filterCriteria.getMinPrice())
+                            .toPredicate(root, query, criteriaBuilder));
+                }
+
+                if (filterCriteria.getMaxPrice() > 0) {
+                    predicates.add(ItemSpecifications.priceLessThanOrEqual(filterCriteria.getMaxPrice())
+                            .toPredicate(root, query, criteriaBuilder));
+                }
             }
 
             if (filterCriteria.getCity() != null && !filterCriteria.getCity().isBlank()) {
-                predicates.add(ItemSpecifications.cityIsLike(filterCriteria.getCity()).toPredicate(root, query, criteriaBuilder));
+                predicates.add(ItemSpecifications.cityIsLike(filterCriteria.getCity())
+                        .toPredicate(root, query, criteriaBuilder));
             }
 
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
+
 
     private Specification<Item> buildItemSpecification(ItemFilterCriteria filterCriteria) {
         return (root, query, criteriaBuilder) -> {

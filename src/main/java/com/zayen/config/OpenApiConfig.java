@@ -12,11 +12,11 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @OpenAPIDefinition(
         info = @Info(
                 contact = @Contact(
-                        name = "Bassem",
-                        email = "bassamraouafi@gmail.com",
-                        url = "https://www.linkedin.com/in/bassem-raouafi"
+                        name = "Sadok",
+                        email = "sadokdorbez0@gmail.com",
+                        url = "https://www.linkedin.com/in/mohamed-sadok-dorboz-8412b71b2/"
                 ),
-                description = "COZY Backend REST API",
+                description = "ZAYEN Backend REST API",
                 title = "",
                 version = "1.0",
                 license = @License(
