@@ -25,6 +25,9 @@ public class Order {
     @ManyToOne
     private Client client;
 
+    @ManyToOne
+    private Seller seller;
+
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)

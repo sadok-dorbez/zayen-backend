@@ -1,10 +1,13 @@
 package com.zayen.services.impl;
 
 import com.zayen.entities.Item;
+import com.zayen.entities.Order;
 import com.zayen.util.EmailUtil;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ import java.util.TimeZone;
 public class EmailService {
 
     private final JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}") // Or any other property holding the sender address
+    private String from;
 
     public EmailService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
@@ -85,6 +90,17 @@ public class EmailService {
         helper.setSubject("Email Verification Code");
         helper.setText("Your verification code is: " + otpCode, true);
         javaMailSender.send(message);
+    }
+
+
+    public void sendOrderStatusUpdate(Order order) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(from);
+        message.setTo(order.getClient().getEmail());
+        message.setSubject("Order Status Updated");
+        message.setText("Your order #" + order.getId() + " is now " + order.getStatus());
+
+        javaMailSender.send(message); // use javaMailSender instead of undefined mailSender
     }
 
 
