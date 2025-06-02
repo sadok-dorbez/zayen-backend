@@ -51,6 +51,7 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "buyer_id")
+    @JsonIgnore
     private Client buyer;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)

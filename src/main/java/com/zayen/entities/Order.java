@@ -1,6 +1,7 @@
 package com.zayen.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zayen.enumeration.OrderStatus;
 import com.zayen.enumeration.PaymentMethod;
 import jakarta.persistence.*;
@@ -23,9 +24,11 @@ public class Order {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Client client;
 
     @ManyToOne
+    @JsonIgnore
     private Seller seller;
 
     private LocalDateTime orderDate;

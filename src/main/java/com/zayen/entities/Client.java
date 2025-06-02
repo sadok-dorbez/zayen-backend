@@ -1,5 +1,6 @@
 package com.zayen.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zayen.enumeration.Role;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -25,5 +26,6 @@ public class Client extends User {
     }
 
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Cart cart;
 }
