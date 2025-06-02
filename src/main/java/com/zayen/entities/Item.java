@@ -30,6 +30,7 @@ public class Item {
     private String description;
     private String ownerName;
     private String city;
+    private int quantity;
 
 
 

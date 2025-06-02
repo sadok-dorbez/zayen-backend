@@ -1,0 +1,33 @@
+package com.zayen.entities;
+
+
+import com.zayen.enumeration.OrderStatus;
+import com.zayen.enumeration.PaymentMethod;
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+public class Order {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @ManyToOne
+    private Client client;
+
+    private LocalDateTime orderDate;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
+    private Double totalPrice;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items;
+}

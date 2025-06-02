@@ -15,4 +15,5 @@ public class ItemFilterCriteria {
     private double minPrice;
     private double maxPrice;
     private String city;
+    private int quantity;
 }

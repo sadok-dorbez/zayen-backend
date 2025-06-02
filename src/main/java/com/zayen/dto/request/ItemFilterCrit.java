@@ -14,4 +14,5 @@ public class ItemFilterCrit {
     private Color color;
     private ItemCategory category;
     private String city;
+    private int quantity;
 }

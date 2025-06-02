@@ -59,6 +59,7 @@ public class ItemServiceImpl implements ItemService {
         item.setPrice(itemRequest.getPrice());
         item.setCity(itemRequest.getCity());
         item.setDescription(itemRequest.getDescription());
+        item.setQuantity(itemRequest.getQuantity());
         item.setSize(itemRequest.getSize());
         item.setColor(itemRequest.getColor());
         item.setCategory(itemRequest.getCategory());

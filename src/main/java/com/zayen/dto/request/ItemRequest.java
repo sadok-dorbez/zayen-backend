@@ -13,6 +13,7 @@ public class ItemRequest {
     private double price;
     private String description;
     private String ownerName;
+    private int quantity;
     private String city;
     private Size size;
     private Color color;
