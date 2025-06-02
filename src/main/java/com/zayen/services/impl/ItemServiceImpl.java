@@ -161,10 +161,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public CustomPageResponse<Item> filterItems(ItemFilterCrit filterCriteria, Pageable pageable) {
+    public CustomPageResponse<Item> filterItems(ItemFilterCriteria filterCriteria, Pageable pageable) {
         Specification<Item> spec = buildItemSpecification2(filterCriteria);
-        Page<Item> filteredProperties = itemRepository.findAll(spec, pageable);
-        return createCustomPageResponse(filteredProperties);
+        Page<Item> filteredItemss = itemRepository.findAll(spec, pageable);
+        return createCustomPageResponse(filteredItemss);
     }
 
     @Override
@@ -179,44 +179,44 @@ public class ItemServiceImpl implements ItemService {
         return itemRepository.findTop5ByStatusOrderByIdDesc(ItemStatus.PUBLISHED);
     }
 
-    private Specification<Item> buildItemSpecification2(ItemFilterCrit filterCriteria) {
+    private Specification<Item> buildItemSpecification2(ItemFilterCriteria filterCriteria) {
         return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            // Add PUBLISHED status to all cases
+
+            // Always filter by status PUBLISHED
             predicates.add(ItemSpecifications.statusIs(ItemStatus.PUBLISHED).toPredicate(root, query, criteriaBuilder));
 
-
-            if (filterCriteria.getCategory() != null) {
-                predicates.add(ItemSpecifications.itemCategoryIsLike(filterCriteria.getItemCategory()).toPredicate(root, query, criteriaBuilder));
-            }
-            if (filterCriteria.getSize() != null) {
-                predicates.add(ItemSpecifications.itemSizeIsLike(filterCriteria.getItemSize()).toPredicate(root, query, criteriaBuilder));
+            if (filterCriteria.getItemCategory() != null) {
+                predicates.add(ItemSpecifications.itemCategoryIs(filterCriteria.getItemCategory()).toPredicate(root, query, criteriaBuilder));
             }
 
-            if (filterCriteria.getColor() != null) {
-                predicates.add(ItemSpecifications.itemColorIsLike(filterCriteria.getItemColor()).toPredicate(root, query, criteriaBuilder));
+            if (filterCriteria.getItemSize() != null) {
+                predicates.add(ItemSpecifications.itemSizeIs(filterCriteria.getItemSize()).toPredicate(root, query, criteriaBuilder));
+            }
+
+            if (filterCriteria.getItemColor() != null) {
+                predicates.add(ItemSpecifications.itemColorIs(filterCriteria.getItemColor()).toPredicate(root, query, criteriaBuilder));
             }
 
             if (filterCriteria.getPrice() > 0) {
                 predicates.add(ItemSpecifications.priceEqual(filterCriteria.getPrice()).toPredicate(root, query, criteriaBuilder));
             }
 
-
-            if (StringUtils.isNotBlank(filterCriteria.getCity())) {
+            if (filterCriteria.getCity() != null && !filterCriteria.getCity().isBlank()) {
                 predicates.add(ItemSpecifications.cityIsLike(filterCriteria.getCity()).toPredicate(root, query, criteriaBuilder));
             }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
-        private Specification<Item> buildPropertySpecification(ItemFilterCriteria filterCriteria) {
-            return (root, query, criteriaBuilder) -> {
+
+    private Specification<Item> buildItemSpecification(ItemFilterCriteria filterCriteria) {
+        return (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
 
-            if (filterCriteria.getCity() != null) {
+            if (filterCriteria.getCity() != null && !filterCriteria.getCity().isBlank()) {
                 predicates.add(ItemSpecifications.cityIsLike(filterCriteria.getCity()).toPredicate(root, query, criteriaBuilder));
             }
-
-
 
             if (filterCriteria.getItemCategory() != null) {
                 predicates.add(ItemSpecifications.itemCategoryIs(filterCriteria.getItemCategory()).toPredicate(root, query, criteriaBuilder));
@@ -230,10 +230,10 @@ public class ItemServiceImpl implements ItemService {
                 predicates.add(ItemSpecifications.priceLessThanOrEqual(filterCriteria.getMaxPrice()).toPredicate(root, query, criteriaBuilder));
             }
 
-
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
+
 
     private CustomPageResponse<Item> createCustomPageResponse(Page<Item> items) {
         CustomPageable customPageable = new CustomPageable(

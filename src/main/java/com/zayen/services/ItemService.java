@@ -1,6 +1,7 @@
 package com.zayen.services;
 
 import com.zayen.dto.request.ItemFilterCrit;
+import com.zayen.dto.request.ItemFilterCriteria;
 import com.zayen.dto.request.ItemRequest;
 import com.zayen.dto.response.CustomPageResponse;
 import com.zayen.entities.Item;
@@ -20,7 +21,7 @@ public interface ItemService {
     CustomPageResponse<Item> getItemsByStatusAndCity(ItemStatus status, String city, int page, int size);
     CustomPageResponse<Item> getItemsByStatus(ItemStatus status, int page, int size);
     Item publishItem(Long propertyId);
-    CustomPageResponse<Item> filterItems(ItemFilterCrit filterCriteria, Pageable pageable);
+    CustomPageResponse<Item> filterItems(ItemFilterCriteria filterCriteria, Pageable pageable);
 
     Item getItemById(Long id);
     List<Item> getLatestPublishedItems();
