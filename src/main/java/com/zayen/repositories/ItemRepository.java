@@ -7,11 +7,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
-    long countItemsByStatusAndClientId(ItemStatus status, Long clientId);
+
+    @Query("SELECT COUNT(i) FROM Item i WHERE i.status = :status AND i.buyer.id = :clientId")
+    long countItemsByStatusAndClientId(@Param("status") ItemStatus status, @Param("clientId") Long clientId);
     Page<Item> findBySellerId(Long sellerId, Pageable pageable);
     Page<Item> findBySellerIdAndStatus(Long sellerId,ItemStatus status, Pageable pageable);
     Page<Item> findByStatusOrderByIdDesc(ItemStatus status, Pageable pageable);

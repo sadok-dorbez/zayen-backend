@@ -1,7 +1,9 @@
 package com.zayen.entities;
 
 import com.zayen.enumeration.Role;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +24,6 @@ public class Client extends User {
 
     }
 
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Cart cart;
 }

@@ -50,9 +50,8 @@ public class Item {
     private Seller seller;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    @JsonIgnore
-    private Client client;
+    @JoinColumn(name = "buyer_id")
+    private Client buyer;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Image> images;

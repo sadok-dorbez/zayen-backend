@@ -78,22 +78,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ClientDetailsDTO getClientById(Long clientId) {
-        Client client =  clientRepository.findById(clientId)
+        Client client = clientRepository.findById(clientId)
                 .orElseThrow(() -> new NotFoundException("Client not found with ID: " + clientId));
 
-        long itemsWithClientsStatus = itemRepository.countItemsByStatusAndClientId(ItemStatus.WITH_CLIENT, clientId);
-        long itemsPublished = itemRepository.countItemsByStatusAndClientId(ItemStatus.PUBLISHED, clientId);
+        // Count only items bought by this client
+        long itemsBought = itemRepository.countItemsByStatusAndClientId(ItemStatus.WITH_CLIENT, clientId);
+
         ClientDetailsDTO responseDTO = new ClientDetailsDTO();
         responseDTO.setId(client.getId());
         responseDTO.setFirstname(client.getFirstname());
         responseDTO.setLastname(client.getLastname());
         responseDTO.setEmail(client.getEmail());
         responseDTO.setPhoneNumber(client.getPhoneNumber());
-        responseDTO.setItemsWithClient(itemsWithClientsStatus);
-        responseDTO.setItemsPublished(itemsPublished);
+
+        // Create stats DTO
+        ClientItemStatsDTO itemStats = new ClientItemStatsDTO(itemsBought);
+        responseDTO.setItemStats(itemStats); // Add this property in the ClientDetailsDTO
 
         return responseDTO;
     }
+
 
     @Override
     public SellerDetailsDTO getSellerById(Long sellerId) {

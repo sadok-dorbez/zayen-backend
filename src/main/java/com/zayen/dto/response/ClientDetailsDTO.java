@@ -11,6 +11,7 @@ public class ClientDetailsDTO {
     private String phoneNumber;
     private long ItemsWithClient;
     private long itemsPublished;
+    private ClientItemStatsDTO itemStats;
 }
 
 
